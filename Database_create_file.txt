@@ -1,0 +1,211 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+
+Library Management System
+
+-----------------------------------------------------------------------------------------------------------------
+SQL QUERIES
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> create database mydb;
+
+mysql> use mydb;
+Database changed
+
+mysql> create table BOOKS(isbn int(20) not null, Title varchar(25) not null, Category varchar(50) not null, Price int (8) not null, Status varchar(20), Author varchar(20) not null, Publisher varchar(50) not null, Updatation_Date timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP, primary key(isbn));
+Query OK, 0 rows affected, 2 warnings (1.52 sec)
+
+mysql> create table Employee(Emp_ID int (5) not null, E_name varchar(50) not null, E_Email varchar(25) not null, Position varchar(10) not null, primary key(Emp_ID));
+Query OK, 0 rows affected, 1 warning (0.61 sec)
+
+mysql> create table Student(student_ID int (5) not null, Dept varchar(10) not null, student_Name varchar(20), student_Email varchar(25) not null, student_Address varchar(50) not null, Regd_date timestamp not null DEFAULT CURRENT_TIMESTAMP, primary key(student_ID));
+Query OK, 0 rows affected, 1 warning (2.19 sec)
+
+mysql> describe Students;
+ERROR 1146 (42S02): Table 'mydb.students' doesn't exist
+mysql> describe Student;
++-----------------+-------------+------+-----+-------------------+-------------------+
+| Field           | Type        | Null | Key | Default           | Extra             |
++-----------------+-------------+------+-----+-------------------+-------------------+
+| student_ID      | int         | NO   | PRI | NULL              |                   |
+| Dept            | varchar(10) | NO   |     | NULL              |                   |
+| student_Name    | varchar(20) | YES  |     | NULL              |                   |
+| student_Email   | varchar(25) | NO   |     | NULL              |                   |
+| student_Address | varchar(50) | NO   |     | NULL              |                   |
+| Regd_date       | timestamp   | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------------+-------------+------+-----+-------------------+-------------------+
+6 rows in set (0.26 sec)
+
+mysql> describe employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Emp_ID   | int         | NO   | PRI | NULL    |       |
+| E_name   | varchar(50) | NO   |     | NULL    |       |
+| E_Email  | varchar(25) | NO   |     | NULL    |       |
+| Position | varchar(10) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.11 sec)
+
+mysql> create table Issue_Status(Issue_ID int(5) not null, StudentID int(5) not null, Issued_book varchar(25) not null, Issue_date timestamp not null DEFAULT CURRENT_TIMESTAMP,isbn_book int(20) not null, primary key(Issue_ID), constraint foreign key(isbn_book) references BOOKS(isbn), constraint foreign key(StudentID) references Student(student_ID));
+Query OK, 0 rows affected, 3 warnings (1.31 sec)
+
+mysql> create table Return_Status(Return_ID int(5) not null, Return_StudentID int(5) not null, Return_book varchar(25) not null, Return_date timestamp not null DEFAULT CURRENT_TIMESTAMP, isbn_book2 int(20) not null, primary key(Return_ID), constraint foreign key(isbn_book2) references BOOKS(isbn), constraint foreign key(Return_StudentID) references Issue_Status(StudentID));
+Query OK, 0 rows affected, 3 warnings (0.94 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| books          |
+| employee       |
+| issue_status   |
+| return_status  |
+| student        |
++----------------+
+5 rows in set (0.28 sec)
+
+mysql> describe books;
++-----------------+-------------+------+-----+---------------------+-----------------------------+
+| Field           | Type        | Null | Key | Default             | Extra                       |
++-----------------+-------------+------+-----+---------------------+-----------------------------+
+| isbn            | int         | NO   | PRI | NULL                |                             |
+| Title           | varchar(25) | NO   |     | NULL                |                             |
+| Category        | varchar(50) | NO   |     | NULL                |                             |
+| Price           | int         | NO   |     | NULL                |                             |
+| Status          | varchar(20) | YES  |     | NULL                |                             |
+| Author          | varchar(20) | NO   |     | NULL                |                             |
+| Publisher       | varchar(50) | NO   |     | NULL                |                             |
+| Updatation_Date | timestamp   | NO   |     | 0000-00-00 00:00:00 | on update CURRENT_TIMESTAMP |
++-----------------+-------------+------+-----+---------------------+-----------------------------+
+8 rows in set (0.11 sec)
+
+mysql> describe employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Emp_ID   | int         | NO   | PRI | NULL    |       |
+| E_name   | varchar(50) | NO   |     | NULL    |       |
+| E_Email  | varchar(25) | NO   |     | NULL    |       |
+| Position | varchar(10) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> describe issue_status;
++-------------+-------------+------+-----+-------------------+-------------------+
+| Field       | Type        | Null | Key | Default           | Extra             |
++-------------+-------------+------+-----+-------------------+-------------------+
+| Issue_ID    | int         | NO   | PRI | NULL              |                   |
+| StudentID   | int         | NO   | MUL | NULL              |                   |
+| Issued_book | varchar(25) | NO   |     | NULL              |                   |
+| Issue_date  | timestamp   | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| isbn_book   | int         | NO   | MUL | NULL              |                   |
++-------------+-------------+------+-----+-------------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> describe return_status;
++------------------+-------------+------+-----+-------------------+-------------------+
+| Field            | Type        | Null | Key | Default           | Extra             |
++------------------+-------------+------+-----+-------------------+-------------------+
+| Return_ID        | int         | NO   | PRI | NULL              |                   |
+| Return_StudentID | int         | NO   | MUL | NULL              |                   |
+| Return_book      | varchar(25) | NO   |     | NULL              |                   |
+| Return_date      | timestamp   | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| isbn_book2       | int         | NO   | MUL | NULL              |                   |
++------------------+-------------+------+-----+-------------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> describe student;
++-----------------+-------------+------+-----+-------------------+-------------------+
+| Field           | Type        | Null | Key | Default           | Extra             |
++-----------------+-------------+------+-----+-------------------+-------------------+
+| student_ID      | int         | NO   | PRI | NULL              |                   |
+| Dept            | varchar(10) | NO   |     | NULL              |                   |
+| student_Name    | varchar(20) | YES  |     | NULL              |                   |
+| student_Email   | varchar(25) | NO   |     | NULL              |                   |
+| student_Address | varchar(50) | NO   |     | NULL              |                   |
+| Regd_date       | timestamp   | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------------+-------------+------+-----+-------------------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO books
+    -> VALUES (1001, "Half Girlfriend","Romantic",500,"Available","Chetan Bhagatt","Rupa Publications",'2017-07-08 12:49:09'), (1002, "PHP And MySql programming","Management",2000,"Available","Mike McGrath","Mike Murach & Associates Inc.",'2018-08-18 15:40:31'), (1003, "HC Verma","Science",700,"Not-Available","HC Verma","BHARATI BHAWAN Publishers & Distributors",'2016-07-08 11:30:29'), (1004, "RD SHARMA","Mathematics",1500,"Available","RD SHARMA","Dhanpat Rai Publications",'2019-10-17 10:09:55');
+Query OK, 4 rows affected (0.49 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from books;
++------+---------------------------+-------------+-------+---------------+----------------+------------------------------------------+---------------------+
+| isbn | Title                     | Category    | Price | Status        | Author         | Publisher                                | Updatation_Date     |
++------+---------------------------+-------------+-------+---------------+----------------+------------------------------------------+---------------------+
+| 1001 | Half Girlfriend           | Romantic    |   500 | Available     | Chetan Bhagatt | Rupa Publications                        | 2017-07-08 12:49:09 |
+| 1002 | PHP And MySql programming | Management  |  2000 | Available     | Mike McGrath   | Mike Murach & Associates Inc.            | 2018-08-18 15:40:31 |
+| 1003 | HC Verma                  | Science     |   700 | Not-Available | HC Verma       | BHARATI BHAWAN Publishers & Distributors | 2016-07-08 11:30:29 |
+| 1004 | RD SHARMA                 | Mathematics |  1500 | Available     | RD SHARMA      | Dhanpat Rai Publications                 | 2019-10-17 10:09:55 |
++------+---------------------------+-------------+-------+---------------+----------------+------------------------------------------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee
+    -> VALUES (1202, "Rakesh Kumar","rk141@gmail.com","Admin"), (1205, "Rupali Singh","rupali@gmail.com","Assistant"), (1211, "Ranbir Rathore","Rathore_ranbir@gmail.com","Manager");
+Query OK, 3 rows affected (0.34 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----------------+--------------------------+-----------+
+| Emp_ID | E_name         | E_Email                  | Position  |
++--------+----------------+--------------------------+-----------+
+|   1202 | Rakesh Kumar   | rk141@gmail.com          | Admin     |
+|   1205 | Rupali Singh   | rupali@gmail.com         | Assistant |
+|   1211 | Ranbir Rathore | Rathore_ranbir@gmail.com | Manager   |
++--------+----------------+--------------------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO student VALUES (2101, "ENTC","Aarti Rathi","aartirathi@gmail.com","Pune",'2019-07-08 11:30:29'), (2106, "COMP","Riya Singh","riya@gmail.com","Jaipur",'2019-10-18 16:02:22'), (2108, "ENTC","Aditya Kumar","adiKumar@gmail.com","Bhopal",'2018-04-10 12:03:51'),(2111, "IT","Isha tyagi","isha_here@gmail.com","Ambala",'2018-03-16 13:40:21'), (2104, "MECH","Nishu Rai","RaiNishu@gmail.com","Bangalore",'2019-02-21 17:23:21'),(2118, "IT","Shambhavi","shambhavi@gmail.com","New Delhi",'2019-07-31 13:58:29');
+Query OK, 6 rows affected (0.38 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------------+------+--------------+----------------------+-----------------+---------------------+
+| student_ID | Dept | student_Name | student_Email        | student_Address | Regd_date           |
++------------+------+--------------+----------------------+-----------------+---------------------+
+|       2101 | ENTC | Aarti Rathi  | aartirathi@gmail.com | Pune            | 2019-07-08 11:30:29 |
+|       2104 | MECH | Nishu Rai    | RaiNishu@gmail.com   | Bangalore       | 2019-02-21 17:23:21 |
+|       2106 | COMP | Riya Singh   | riya@gmail.com       | Jaipur          | 2019-10-18 16:02:22 |
+|       2108 | ENTC | Aditya Kumar | adiKumar@gmail.com   | Bhopal          | 2018-04-10 12:03:51 |
+|       2111 | IT   | Isha tyagi   | isha_here@gmail.com  | Ambala          | 2018-03-16 13:40:21 |
+|       2118 | IT   | Shambhavi    | shambhavi@gmail.com  | New Delhi       | 2019-07-31 13:58:29 |
++------------+------+--------------+----------------------+-----------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO issue_status VALUES (1314, 2108,"HC Verma",'2020-03-28 10:30:29',1003), (1374, 2101,"RD SHARMA",'2021-11-18 15:12:25',1004),(1302, 2111,"Half Girlfriend",'2020-05-14 11:44:05',1001);
+Query OK, 3 rows affected (0.44 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from issue_status;
++----------+-----------+-----------------+---------------------+-----------+
+| Issue_ID | StudentID | Issued_book     | Issue_date          | isbn_book |
++----------+-----------+-----------------+---------------------+-----------+
+|     1302 |      2111 | Half Girlfriend | 2020-05-14 11:44:05 |      1001 |
+|     1314 |      2108 | HC Verma        | 2020-03-28 10:30:29 |      1003 |
+|     1374 |      2101 | RD SHARMA       | 2021-11-18 15:12:25 |      1004 |
++----------+-----------+-----------------+---------------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO return_status VALUES (1412, 2108,"HC Verma",'2020-07-15 12:05:20',1003),(1421, 2111,"Half Girlfriend",'2020-10-16 15:31:15',1001);
+Query OK, 2 rows affected (0.28 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from return_status;
++-----------+------------------+-----------------+---------------------+------------+
+| Return_ID | Return_StudentID | Return_book     | Return_date         | isbn_book2 |
++-----------+------------------+-----------------+---------------------+------------+
+|      1412 |             2108 | HC Verma        | 2020-07-15 12:05:20 |       1003 |
+|      1421 |             2111 | Half Girlfriend | 2020-10-16 15:31:15 |       1001 |
++-----------+------------------+-----------------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+**********************************************************************
+mysql> INSERT INTO return_status VALUES (1416, 2104,"HC Verma",'2020-09-15 12:05:20',1003);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`mydb`.`return_status`, CONSTRAINT `return_status_ibfk_2` FOREIGN KEY (`Return_StudentID`) REFERENCES `issue_status` (`StudentID`))
+*************************************************************************
+
