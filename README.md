@@ -1,4 +1,10 @@
-# Mini-Project-SQL-LibraryManagement
+<h1 align="middle"> :grey_exclamation: Mini-Project-SQL-LibraryManagement :grey_exclamation: </h1>
+<p align ="middle"> This is a repository for DBMS Lab Mini Project in Second year Information Technology of SPPU! <br>
+<b><i>Do star ⭐ this Repository if you feel it helped & drop a follow!</b></i><br><br>
+:blue_heart: <b> Happy Learning </b> :blue_heart:
+<br></p>
+
+#
 Library Management System
 
 Created a library management system of a particular institution to make the books and magazines available to the teachers and students remotely. Library Management System is a system which maintains the information about the books present in the library, their authors, the members of library to whom books are issued, library staff and all. This is very difficult to organize manually. Maintenance of all this information manually is a very complex task. Owing to the advancement of technology, Library Management System makes the task relatively easy.
